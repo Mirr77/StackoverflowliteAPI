@@ -67,6 +67,7 @@ def delete_question(question_id):
 def sign_up():
     email = request.get_json('email')['email']
     password = request.get_json('password')['password']
+    user_email = [user_email for user_email in users if user_email['email'] == email]
     if not email or email == " ":
         abort(404)
     if not re.match(email_format, email):
@@ -75,9 +76,12 @@ def sign_up():
         abort(404)
     if not request.json:
         abort(404)
+    if user_email:
+       abort(409)
     user = User(str(email), str(password))
     users.append(user.__dict__)
     return jsonify({"User": users})
+
 
 
 @app.route('/stackoverflowlite/api/v1/login', methods=['POST'])
@@ -113,3 +117,10 @@ def not_found(error):
 def bad_request(error):
     '''400 Error function'''
     return make_response(jsonify({'error':str(error)}), 400)
+
+@app.errorhandler(409)
+def bad_request(error):
+    '''400 Error function'''
+    return make_response(jsonify({'error':str(error)}), 409)
+
+
