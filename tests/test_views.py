@@ -24,3 +24,12 @@ def test_get_question(client):
     question_id = json.loads(res.data)["questions"][0]["question_id"]
     response = client.get('/stackoverflowlite/api/v1/questions/{}'.format(str(question_id)))
     assert json.loads(response.data)["question"]["question_id"] == question_id
+
+def test_post_answer(client):
+    res = client.get('/stackoverflowlite/api/v1/questions')
+    question_id = json.loads(res.data)["questions"][0]["question_id"]
+    answer = {"answer":"you use pytest"}
+    response = client.put('/stackoverflowlite/api/v1/questions/{}'.format(str(question_id)),
+                          content_type='application/json',
+                          data=json.dumps(answer))
+    assert len(json.loads(response.data)["question"]["answers"]) == 1
