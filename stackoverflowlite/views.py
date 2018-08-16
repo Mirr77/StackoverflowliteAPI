@@ -38,7 +38,7 @@ def post_answer(question_id):
     if len(question) == 0:
         abort(404)
     answer_desc = request.get_json('answer')['answer']
-    if not answer or answer_desc == " ":
+    if not answer_desc or answer_desc == " ":
         abort(400)
     if not request.json:
         abort(400)
