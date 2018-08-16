@@ -8,6 +8,12 @@ def client():
     test_client = app.test_client()
     return test_client
 
+def test_index(client):
+    response = client.get('/stackoverflowlite/api/v1')
+    data = json.loads(response.data)["message"]
+    assert data  == "Welcome to stackoverflowlite"
+
+
 def test_get_questions(client):
     response = client.get('/stackoverflowlite/api/v1/questions')
     data = json.loads(response.data)["questions"]
