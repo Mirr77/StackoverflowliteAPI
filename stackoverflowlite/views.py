@@ -76,6 +76,27 @@ def sign_up():
     return jsonify({"User": users})
 
 
+@app.route('/stackoverflowlite/api/v1/login', methods=['POST'])
+def login():
+    email = request.get_json('email')['email']
+    password = request.get_json('password')['password']
+
+    if not email or email == " ":
+        abort(404)
+    if not password or password == " ":
+        abort(404)
+    if not request.json:
+        abort(404)
+    user_email = [user_email for user_email in users if user_email['email'] == email]
+    user_password = [user_password for user_password in users if user_password['password'] == password]
+
+    if not user_email:
+        return jsonify({"message": "email is incorrect"})
+    elif not user_password:
+        return jsonify({"message": "password is incorrect"})
+    elif user_email and password:
+        return jsonify({"message": "login succesful"})
+
 @app.errorhandler(404)
 def not_found(error):
     '''404 Error function'''
