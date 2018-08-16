@@ -1,0 +1,18 @@
+[
+  "tests/test_views.py::test_index", 
+  "tests/test_views.py::test_get_questions", 
+  "tests/test_views.py::test_post_question", 
+  "tests/test_views.py::test_get_question", 
+  "tests/test_views.py::test_post_answer", 
+  "tests/test_views.py::test_delete_question", 
+  "tests/test_views.py::test_no_question", 
+  "tests/test_views.py::test_empty_question", 
+  "tests/test_views.py::test_no_question_answer", 
+  "tests/test_views.py::test_no_question_delete", 
+  "tests/test_views.py::test_signup", 
+  "tests/test_views.py::test_login", 
+  "tests/test_views.py::test_empty_email_login", 
+  "tests/test_views.py::test_empty_email_signup", 
+  "tests/test_views.py::test_empty_password_login", 
+  "tests/test_views.py::test_empty_password_signup"
+]
