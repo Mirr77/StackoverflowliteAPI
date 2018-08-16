@@ -28,3 +28,14 @@ def post_question():
     question = Question(str(question_desc))
     questions.append(question.__dict__)
     return jsonify({'question': questions})
+
+@app.route('/stackoverflowlite/api/v1/questions/<question_id>', methods=['PUT'])
+def post_answer(question_id):
+    '''Post an answer function'''
+    question = [question for question in questions if question['question_id'] == question_id]
+    if len(question) == 0:
+        abort(404)
+    answer_desc = request.get_json('answer')['answer']
+    answer = Answer(str(answer_desc))
+    question[0]['answers'].append(answer.__dict__)
+    return jsonify({'question': question[0]})
