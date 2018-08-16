@@ -60,6 +60,51 @@ def delete_question(question_id):
     questions.remove(question[0])
     return jsonify({'message': "Deleted successfully"})
 
+
+@app.route('/stackoverflowlite/api/v1/signup', methods=['POST'])
+def sign_up():
+    email = request.get_json('email')['email']
+    password = request.get_json('password')['password']
+    user_email = [user_email for user_email in users if user_email['email'] == email]
+    if not email or email == " ":
+        abort(400)
+    if not re.match(email_format, email):
+        return jsonify({"message":"incorrect email format"})
+    if not password or password == " ":
+        abort(400)
+    if not request.json:
+        abort(400)
+    if user_email:
+       abort(409)
+    user = User(str(email), str(password))
+    users.append(user.__dict__)
+    return jsonify({"User": users})
+
+
+
+@app.route('/stackoverflowlite/api/v1/login', methods=['POST'])
+def login():
+    email = request.get_json('email')['email']
+    password = request.get_json('password')['password']
+
+    if not email or email == " ":
+        abort(400)
+    if not re.match(email_format, email):
+        return jsonify({"message": "incorrect email format"})
+    if not password or password == " ":
+        abort(400)
+    if not request.json:
+        abort(400)
+    user_email = [user_email for user_email in users if user_email['email'] == email]
+    user_password = [user_password for user_password in users if user_password['password'] == password]
+
+    if not user_email:
+        return jsonify({"message": "email is incorrect"})
+    elif not user_password:
+        return jsonify({"message": "password is incorrect"})
+    elif user_email and password:
+        return jsonify({"message": "login succesful"})
+
 @app.errorhandler(404)
 def not_found(error):
     '''404 Error function'''
@@ -70,3 +115,9 @@ def not_found(error):
 def bad_request(error):
     '''400 Error function'''
     return make_response(jsonify({'error':str(error)}), 400)
+
+
+@app.errorhandler(409)
+def bad_request(error):
+    '''400 Error function'''
+    return make_response(jsonify({'error':str(error)}), 409)

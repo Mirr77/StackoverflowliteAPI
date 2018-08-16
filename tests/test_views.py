@@ -65,3 +65,37 @@ def test_no_question_answer(client):
 def test_no_question_delete(client):
     res = client.delete('/stackoverflowlite/api/v1/questions/1')
     assert res.status_code == 404
+
+
+def test_signup(client):
+    user = {"email": "mirrmaina@gmail.com","password":"password"}
+    response = client.post('/stackoverflowlite/api/v1/signup', data=json.dumps(user))
+    assert len(json.loads(response.data)["User"]) == 1
+
+def test_login(client):
+    user = {"email": "mirrmaina@gmail.com", "password": "password"}
+    response = client.post('/stackoverflowlite/api/v1/login', data=json.dumps(user))
+    assert response.status_code == 200
+
+def test_empty_email_login(client):
+    user = {"email": " ", "password":"password"}
+    response = client.post('/stackoverflowlite/api/v1/login', data=json.dumps(user))
+    assert response.status_code == 400
+
+def test_empty_email_signup(client):
+    user = {"email": " ", "password":"password"}
+    response = client.post('/stackoverflowlite/api/v1/signup', data=json.dumps(user))
+    assert response.status_code == 400
+
+def test_empty_password_login(client):
+    user = {"password": " ", "email": "mirrmaina@gmail,com" }
+    response = client.post('/stackoverflowlite/api/v1/login', data=dict(email="mirrmaina@gmail,com", password=" "))
+    assert response.status_code == 400
+
+
+def test_empty_password_signup(client):
+    user = {"password": " ", "email": "mirrmaina@gmail,com"}
+    response = client.post('/stackoverflowlite/api/v1/signup', data=dict(email="mirrmaina@gmail,com", password=""))
+    assert response.status_code == 400
+ 
+
