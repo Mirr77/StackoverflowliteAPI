@@ -5,8 +5,7 @@ python:
 install:
     - pip install -r requirements.txt
 script:
-  - coverage run -m pytest
-  - coverage report stackoverflowlite/**/*.py stackoverflowlite/views.py
+  - py.test --cov=stackoverflowlite tests/
   - coveralls
 after_sucess:
   - coveralls

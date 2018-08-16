@@ -33,6 +33,8 @@ pycparser==2.18
 pylint==1.9.3
 pyOpenSSL==18.0.0
 pytest==3.7.1
+pytest-cov==2.5.1
+pytest-cover==3.0.0
 pytest-flask==0.10.0
 requests==2.19.1
 scandir==1.9.0
