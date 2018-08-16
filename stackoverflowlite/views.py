@@ -39,3 +39,13 @@ def post_answer(question_id):
     answer = Answer(str(answer_desc))
     question[0]['answers'].append(answer.__dict__)
     return jsonify({'question': question[0]})
+
+
+@app.route('/stackoverflowlite/api/v1/questions/<question_id>', methods=['DELETE'])
+def delete_question(question_id):
+    '''Delete question function'''
+    question = [question for question in questions if question['question_id'] == question_id]
+    if len(question) == 0:
+        abort(404)
+    questions.remove(question[0])
+    return jsonify({'message': "Deleted successfully"})
