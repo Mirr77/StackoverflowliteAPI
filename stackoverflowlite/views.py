@@ -25,6 +25,8 @@ def post_question():
     question_desc = request.get_json('description')['description']
     if not question_desc or question_desc == " ":
         abort(400)
+    if not request.json:
+        abort(400)
     question = Question(str(question_desc))
     questions.append(question.__dict__)
     return jsonify({'question': questions})
@@ -36,6 +38,10 @@ def post_answer(question_id):
     if len(question) == 0:
         abort(404)
     answer_desc = request.get_json('answer')['answer']
+    if not answer or answer_desc == " ":
+        abort(400)
+    if not request.json:
+        abort(400)
     answer = Answer(str(answer_desc))
     question[0]['answers'].append(answer.__dict__)
     return jsonify({'question': question[0]})
@@ -49,3 +55,14 @@ def delete_question(question_id):
         abort(404)
     questions.remove(question[0])
     return jsonify({'message': "Deleted successfully"})
+
+@app.errorhandler(404)
+def not_found(error):
+    '''404 Error function'''
+    return make_response(jsonify({'error':str(error)}), 404)
+
+
+@app.errorhandler(400)
+def bad_request(error):
+    '''400 Error function'''
+    return make_response(jsonify({'error':str(error)}), 400)
