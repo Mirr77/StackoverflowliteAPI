@@ -33,3 +33,9 @@ def test_post_answer(client):
                           content_type='application/json',
                           data=json.dumps(answer))
     assert len(json.loads(response.data)["question"]["answers"]) == 1
+
+def test_delete_question(client):
+    res = client.get('/stackoverflowlite/api/v1/questions')
+    question_id = json.loads(res.data)["questions"][0]["question_id"]
+    response = client.delete('/stackoverflowlite/api/v1/questions/{}'.format(str(question_id)))
+    assert b'message' in response.data
