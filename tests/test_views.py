@@ -39,3 +39,23 @@ def test_delete_question(client):
     question_id = json.loads(res.data)["questions"][0]["question_id"]
     response = client.delete('/stackoverflowlite/api/v1/questions/{}'.format(str(question_id)))
     assert b'message' in response.data
+
+def test_no_question(client):
+    res = client.get('/stackoverflowlite/api/v1/questions/1')
+    assert res.status_code == 404
+
+
+def test_empty_question(client):
+    question = {"description": " "}
+    response = client.post('/stackoverflowlite/api/v1/questions', data=json.dumps(question))
+    assert response.status_code == 400
+
+
+def test_no_question_answer(client):
+    res = client.put('/stackoverflowlite/api/v1/questions/1')
+    assert res.status_code == 404
+
+
+def test_no_question_delete(client):
+    res = client.delete('/stackoverflowlite/api/v1/questions/1')
+    assert res.status_code == 404
