@@ -1,8 +1,10 @@
 ''' import modules '''
+import re
 from flask import jsonify, abort, make_response, request
 from . import app
 from .models.questions import questions, Question, Answer
 from .models.users import User, users
+email_format = r"(^[a-zA-z0-9_.]+@[a-zA-Z0-9-]+\.[a-z]+$)"
 
 @app.route('/stackoverflowlite/api/v1',methods=['GET'])
 def index():
@@ -67,6 +69,8 @@ def sign_up():
     password = request.get_json('password')['password']
     if not email or email == " ":
         abort(404)
+    if not re.match(email_format, email):
+        return jsonify({"message":"incorrect email format"})
     if not password or password == " ":
         abort(404)
     if not request.json:
@@ -83,6 +87,8 @@ def login():
 
     if not email or email == " ":
         abort(404)
+    if not re.match(email_format, email):
+        return jsonify({"message": "incorrect email format"})
     if not password or password == " ":
         abort(404)
     if not request.json:
