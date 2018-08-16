@@ -65,3 +65,10 @@ def test_no_question_answer(client):
 def test_no_question_delete(client):
     res = client.delete('/stackoverflowlite/api/v1/questions/1')
     assert res.status_code == 404
+
+def test_signup(client):
+    user = {"email": "mirrmaina@gmail.com","password":"password"}
+    response = client.post('/stackoverflowlite/api/v1/signup', data=json.dumps(user))
+    print(response)
+    assert len(json.loads(response.data)["User"]) == 1
+
