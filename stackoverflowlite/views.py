@@ -4,6 +4,10 @@ from . import app
 from .models.questions import questions, Question, Answer
 from .models.users import User, users
 
+@app.route('/stackoverflowlite/api/v1',methods=['GET'])
+def index():
+    return jsonify({"message":"Welcome to stackoverflowlite"})
+
 
 @app.route('/stackoverflowlite/api/v1/questions', methods=['GET'])
 def get_questions():
