@@ -60,6 +60,22 @@ def delete_question(question_id):
     questions.remove(question[0])
     return jsonify({'message': "Deleted successfully"})
 
+
+@app.route('/stackoverflowlite/api/v1/signup', methods=['POST'])
+def sign_up():
+    email = request.get_json('email')['email']
+    password = request.get_json('password')['password']
+    if not email or email == " ":
+        abort(404)
+    if not password or password == " ":
+        abort(404)
+    if not request.json:
+        abort(404)
+    user = User(str(email), str(password))
+    users.append(user.__dict__)
+    return jsonify({"User": users})
+
+
 @app.errorhandler(404)
 def not_found(error):
     '''404 Error function'''
