@@ -18,3 +18,13 @@ def get_question(question_id):
     if len(question) == 0:
         abort(404)
     return jsonify({'question': question[0]})
+
+@app.route('/stackoverflowlite/api/v1/questions', methods=['POST'])
+def post_question():
+    ''' Post an answer function'''
+    question_desc = request.get_json('description')['description']
+    if not question_desc or question_desc == " ":
+        abort(400)
+    question = Question(str(question_desc))
+    questions.append(question.__dict__)
+    return jsonify({'question': questions})
