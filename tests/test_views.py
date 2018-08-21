@@ -38,7 +38,7 @@ def test_post_answer(client):
     res = client.get('/api/v1/questions')
     question_id = json.loads(res.data)["questions"][0][0]
     answer = {"answer":"you use pytest"}
-    response = client.post('api/v1/questions/{}/answers'.format(question_id),
+    response = client.post('/questions/{}/answers'.format(question_id),
                           content_type='application/json',
                           data=json.dumps(answer))
     assert len(json.loads(response.data)["question"][4]) == 1
@@ -63,12 +63,11 @@ def test_empty_question(client):
 
 
 def test_no_question_answer(client):
-    res = client.post('api/v1/questions/1')
+    res = client.put('/questions/1')
     assert res.status_code == 404
 
 
 def test_no_question_delete(client):
     res = client.delete('api/v1/questions/1')
     assert res.status_code == 404
-
 
