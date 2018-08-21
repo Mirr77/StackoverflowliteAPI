@@ -1,4 +1,4 @@
-from stackoverflowlite import app
+from stackoverflowlite import APP
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    APP.run(debug=True)
