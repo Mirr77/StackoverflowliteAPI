@@ -1,10 +1,9 @@
 from flask import Flask
 from db import create_tables
 
-
 create_tables.create_tables()
 app = Flask(__name__)
-app.secret_key = 'secret'
+app.url_map.strict_slashes = False
 
 from stackoverflowlite.views import questions, auth, api
 

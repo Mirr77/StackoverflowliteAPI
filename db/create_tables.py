@@ -7,6 +7,7 @@ QUERIES = [
           username VARCHAR NOT NULL,
           email VARCHAR NOT NULL,
           password VARCHAR NOT NULL
+
           )
   """,
 
@@ -26,8 +27,16 @@ QUERIES = [
           user_id INT REFERENCES users(user_id)
         
           )
+  """,
+
   """
+    CREATE TABLE IF NOT EXISTS blacklist(
+        token_id SERIAL PRIMARY KEY NOT NULL,
+        token VARCHAR NOT NULL)
+  """
+
 ]
+
 
 def create_tables():
     """ Create main app tables """
@@ -38,6 +47,7 @@ def create_tables():
         cur.execute(query)
 
     close_connection(conn)
+
 
 
 

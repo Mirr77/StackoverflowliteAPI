@@ -5,6 +5,7 @@ from db.dbconfig import open_connection, close_connection
 from flask import jsonify
 
 
+
 class User(object):
     ''' User model '''
 
@@ -58,10 +59,10 @@ class User(object):
             cur = conn.cursor()
             cur.execute("INSERT INTO users (username, email, password) VALUES('{}', '{}', '{}')"
                         .format(username, self.email, hashed_pw))
+            user_id = cur.execute("select user_id from users where email = '{}' ".format(self.email))
+            token = self.generate_jwt(user_id)
             cur.close()
             close_connection(conn)
-
-            token = self.generate_jwt(user_exists[0])
 
             user_info = self.user_info()
             response = jsonify({
@@ -75,7 +76,6 @@ class User(object):
     def login(self):
         """ Log in existing user """
         user_exists = self.user_exists()
-        print(user_exists)
 
         if user_exists:
             pw_match = self.verify_pwd(user_exists[3])
@@ -121,10 +121,12 @@ class User(object):
             }
             return jwt.encode(
                 payload,
-                'SECRET_KEY',
+                'secret',
                 algorithm='HS256'
             )
         except Exception as e:
             return e
+
+
 
 

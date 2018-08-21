@@ -3,7 +3,9 @@ import re
 from flask import jsonify, request
 from stackoverflowlite.views import api
 from stackoverflowlite.models.users import User
+from stackoverflowlite.models.blacklist import Blacklist
 from db.dbconfig import open_connection, close_connection
+from stackoverflowlite.utils.util_func import requires_auth
 
 email_format = r"(^[a-zA-z0-9_.]+@[a-zA-z0-9-]+\.[a-z]+$)"
 
@@ -17,8 +19,6 @@ def sign_up():
     username = request.get_json('username')['username']
     cur.execute("select * from users where username = '{}'".format(username))
     names = cur.fetchall()
-    cur.close()
-    close_connection(conn)
 
     if len(names) > 0:
         response = jsonify({"message": "Username is taken"})
@@ -50,6 +50,8 @@ def sign_up():
 
     user = User(email, password)
     register = user.signup(username)
+    cur.close()
+    close_connection(conn)
     return register
 
 
@@ -83,5 +85,19 @@ def login():
         login = user.login()
         return login
 
+
+@api.route('/logout', methods=['POST'])
+@requires_auth
+def logout(identity):
+    ''' Route for logging out '''
+    token = request.headers['Authorization'].encode('ascii', 'ignore')
+
+    Blacklist(str(token))
+
+    response = jsonify({
+        "Message": "Account logged out"
+    })
+    response.status_code = 200
+    return response
 
 
