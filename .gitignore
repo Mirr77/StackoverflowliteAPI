@@ -1,5 +1,8 @@
 .idea/
 venv/
-.pyc
+models/*.pyc
+tests/*.pyc
+views/*.pyc
 .pytest_cache
+tests/.pytest_cache
 *.pyc
