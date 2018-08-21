@@ -1,8 +1,9 @@
 .idea/
 venv/
+stackoverflowlite/*.pyc
+views/*.pyc
 *.pyc
 .pytest_cache
 .env
-
-
+.pyc
 
