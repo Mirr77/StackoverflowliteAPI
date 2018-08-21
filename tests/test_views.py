@@ -37,7 +37,7 @@ def test_get_question(client):
 def test_post_answer(client):
     res = client.get('/api/v1/questions')
     question_id = json.loads(res.data)["questions"][0][0]
-    answer = {"answer":"you use pytest"}
+    answer = {"answer":"you use pycharm"}
     response = client.post('/questions/{}/answers'.format(question_id),
                           content_type='application/json',
                           data=json.dumps(answer))
