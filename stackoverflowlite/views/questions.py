@@ -7,6 +7,11 @@ from db.dbconfig import open_connection, close_connection
 email_format = r"(^[a-zA-z0-9_.]+@[a-zA-z0-9-]+\.[a-z]+$)"
 
 
+@api.route('/')
+def index():
+    return jsonify({'message': 'Welcome to stackoverflowlite API'})
+
+
 @api.route('/questions', methods=['GET', 'POST'])
 def questions():
     ''' Get all questions function '''
@@ -63,7 +68,7 @@ def get_question(question_id):
     return jsonify({'message': "Deleted successfully"})
 
 
-@api.route('/questions/<question_id>', methods=['PUT'])
+@api.route('/questions/<question_id>/answers', methods=['POST'])
 def post_answer(question_id):
     '''Post answer function'''
     conn = open_connection()
