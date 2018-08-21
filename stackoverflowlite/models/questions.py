@@ -1,7 +1,7 @@
 ''' import modules'''
 from uuid import uuid4
 
-questions = []
+QUESTIONS = []
 
 
 class Question(object):
@@ -24,4 +24,4 @@ class Answer(object):
         self.answer_desc = answer_desc
 
     def __repr__(self):
-        return 'Answer: []'.format(self.answer_desc)
+        return 'Answer: {}'.format(self.answer_desc)

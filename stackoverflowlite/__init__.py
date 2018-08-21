@@ -1,6 +1,7 @@
+'''import modules'''
 from flask import Flask
 
-app = Flask(__name__)
-app.secret_key = 'secret'
+APP = Flask(__name__)
+APP.secret_key = 'secret'
 
 from . import views

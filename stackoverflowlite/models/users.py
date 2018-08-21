@@ -1,6 +1,6 @@
-
+'''import modules'''
 from uuid import uuid4
-users = []
+USERS = []
 
 
 class User(object):
