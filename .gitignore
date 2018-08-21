@@ -4,5 +4,5 @@ stackoverflowlite/models/*.pyc
 tests/*.pyc
 stackoverflowlite/*.pyc
 .pytest_cache
-tests/.py_cache
+tests/*pycache__
 *.pyc
