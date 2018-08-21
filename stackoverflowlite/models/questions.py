@@ -1,7 +1,6 @@
 ''' import modules'''
 from uuid import uuid4
-
-questions = []
+from db.dbconfig import open_connection,close_connection
 
 
 class Question(object):
@@ -10,10 +9,11 @@ class Question(object):
     def __init__(self, question_desc):
         self.question_id = str(uuid4())
         self.question_desc = question_desc
-        self.answers = []
-
-    def __repr__(self):
-        return 'Description: {}'.format(self.question_desc)
+        conn = open_connection()
+        cur = conn.cursor()
+        cur.execute("insert into questions(question_desc) values('{}')".format(question_desc))
+        cur.close()
+        close_connection(conn)
 
 
 class Answer(object):
@@ -22,6 +22,7 @@ class Answer(object):
     def __init__(self, answer_desc):
         self.answer_id = str(uuid4())
         self.answer_desc = answer_desc
-
-    def __repr__(self):
-        return 'Answer: []'.format(self.answer_desc)
+        conn = open_connection()
+        cur = conn.cursor()
+        cur.execute("insert into answers(answer_desc) values('{}')".format(answer_desc))
+        close_connection(conn)
