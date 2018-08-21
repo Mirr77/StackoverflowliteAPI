@@ -1,8 +1,8 @@
 .idea/
 venv/
-models/*.pyc
+stackoverflowlite/models/*.pyc
 tests/*.pyc
-views/*.pyc
+stackoverflowlite/*.pyc
 .pytest_cache
-tests/.pytest_cache
+tests/.py_cache
 *.pyc
