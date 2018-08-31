@@ -1,6 +1,6 @@
 ''' import modules '''
 import re
-from flask import jsonify, abort, make_response, request
+from flask import jsonify, abort, request
 from . import APP
 from .models.questions import QUESTIONS, Question, Answer
 from .models.users import User, USERS
@@ -118,16 +118,16 @@ def delete_question(question_id):
 @APP.errorhandler(404)
 def not_found(error):
     '''404 Error function'''
-    return make_response(jsonify({'error':str(error)}), 404)
+    return (jsonify({'error':str(error)}), 404)
 
 
 @APP.errorhandler(400)
 def bad_request(error):
     '''400 Error function'''
-    return make_response(jsonify({'error':str(error)}), 400)
+    return (jsonify({'error':str(error)}), 400)
 
 
 @APP.errorhandler(409)
 def already_exists(error):
     '''400 Error function'''
-    return make_response(jsonify({'error':str(error)}), 409)
+    return (jsonify({'error':str(error)}), 409)
